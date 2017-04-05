@@ -24,7 +24,8 @@ import modle.StudentModle;
  */
 public class ShowStudentDetailsActivity extends AppCompatActivity {
     private static final int RESULT_CODE_EDITED_STUDENT_FORM = 21;
-    private static final int RESULT_CODE = 1;
+    private static final int RESULT_CODE = 2;
+    private static final int REQUEST_CODE = 1;
     private static int rollno = 0;
     private ArrayList<StudentModle> studentInfoList;
     private StudentModle studentInfo;
@@ -61,13 +62,15 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         studentInfo = data.getParcelableExtra("savedInfo");
+        Log.d("debug", String.valueOf(resultCode));
         if (resultCode == 2) {
             Log.d("debug", "YOU SHALl pass by 2");
             studentInfoList.add(studentInfo);
         }
         if (resultCode == RESULT_CODE_EDITED_STUDENT_FORM) {
-            Log.d("debug", "YOU SHALL PASS");
-            studentInfoList.set(data.getIntExtra("pos", 0), studentInfo);
+            int pos = data.getIntExtra("pos", 0);
+            Log.d("debug", String.valueOf(pos));
+            studentInfoList.set(pos, studentInfo);
         }
 
         Log.d("debug", "YOU pass at all time");

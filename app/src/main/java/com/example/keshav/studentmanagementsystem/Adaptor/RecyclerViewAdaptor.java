@@ -1,10 +1,12 @@
 package com.example.keshav.studentmanagementsystem.Adaptor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import modle.StudentModle;
  */
 
 public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdaptor.ViewHolder> {
+    private static final int REQUEST_CODE = 1;
     private Context context;
     private ArrayList<StudentModle> studentInfoList;
 
@@ -68,7 +71,6 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
          */
         public ViewHolder(final View itemView) {
             super(itemView);
-            final int pos = getAdapterPosition();
             tvEmail = (TextView) itemView.findViewById(R.id.tvEmail);
             tvFullName = (TextView) itemView.findViewById(R.id.tvName);
             tvGender = (TextView) itemView.findViewById(R.id.tvGender);
@@ -78,14 +80,14 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
-
+                    final int pos = getAdapterPosition();
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle(R.string.choose_option);
                     builder.setPositiveButton(R.string.view_details, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
                             intent.putExtra("mode", "view");
-                            intent.putExtra("obj", studentInfoList.get(pos + 1));
+                            intent.putExtra("obj", studentInfoList.get(pos));
                             context.startActivity(intent);
                         }
                     });
@@ -93,15 +95,16 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
                             intent.putExtra("mode", "edit");
-                            intent.putExtra("obj", studentInfoList.get(pos + 1));
+                            intent.putExtra("obj", studentInfoList.get(pos));
+                            Log.d("debug", String.valueOf(pos));
                             intent.putExtra("pos", pos);
-                            context.startActivity(intent);
+                            ((Activity) context).startActivityForResult(intent, REQUEST_CODE);
                         }
                     });
                     builder.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
-                            studentInfoList.remove(pos + 1);
+                            studentInfoList.remove(pos);
                             notifyItemRangeRemoved(pos, 1);
                         }
                     });
