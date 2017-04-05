@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">StudentManagementSystem</string>
+    <string name="create_student">Create Student</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="gender">Gender</string>
+    <string name="roll_mo">Roll No.</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="school_name">School Name</string>
+    <string name="other">Other</string>
+    <string name="save">Save</string>
+    <string name="student_details">STUDENT DETAILS</string>
+    <string name="full_name">Name</string>
+    <string name="choose_option">Choose The Following Option</string>
+    <string name="view_details">View details</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+</resources>
