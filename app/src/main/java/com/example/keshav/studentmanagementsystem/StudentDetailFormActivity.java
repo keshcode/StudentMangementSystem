@@ -72,17 +72,29 @@ public class StudentDetailFormActivity extends AppCompatActivity {
         etEmail.setEnabled(false);
         etSchoolName.setEnabled(false);
         btnSave.setVisibility(View.GONE);
+        rdbtnOther.setEnabled(false);
+        rdbtnFemale.setEnabled(false);
+        rdbtnMale.setEnabled(false);
     }
 
     /**
      * Sets values stored student detail to edit
      */
     protected void setEdtitableStudentDetail() {
+        String male = "Male", female = "Female";
         etFirstName.setText(studentData.getmFirstName());
         etLastName.setText(studentData.getmLastName());
         etSchoolName.setText(studentData.getmSchoolName());
         etEmail.setText(studentData.getmEmail());
         tvRollNo.setText(studentData.getmRollNo());
+        Log.d("debug", studentData.getmGender());
+        if (studentData.getmGender().equals(male)) {
+            rdbtnMale.setChecked(true);
+        } else if (studentData.getmGender().equals(female)) {
+            rdbtnFemale.setChecked(true);
+        } else {
+            rdbtnOther.setChecked(true);
+        }
 
     }
 
