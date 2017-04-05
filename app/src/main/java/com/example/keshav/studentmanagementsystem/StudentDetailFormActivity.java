@@ -19,6 +19,7 @@ import modle.StudentModle;
 public class StudentDetailFormActivity extends AppCompatActivity {
     private static final int RESULT_CODE_EDITED_STUDENT_FORM = 21;
     private static final int RESULT_CODE_STUDENT_FORM = 2;
+    private String view = "View";
     private EditText etFirstName, etLastName, etEmail, etSchoolName;
     private RadioButton rdbtnMale, rdbtnFemale, rdbtnOther;
     private TextView tvRollNo;
@@ -27,6 +28,7 @@ public class StudentDetailFormActivity extends AppCompatActivity {
     private StudentModle studentData;
     private Intent paser;
     private int num;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -45,6 +47,10 @@ public class StudentDetailFormActivity extends AppCompatActivity {
             paser = getIntent();
             studentData = paser.getParcelableExtra("obj");
             setEdtitableStudentDetail();
+            if (paser.getStringExtra("mode").equals(view)) {
+                setViewMode();
+            }
+
         }
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +61,17 @@ public class StudentDetailFormActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * sets to view mode disable edit mode and hides save button
+     */
+    protected void setViewMode() {
+        etFirstName.setEnabled(false);
+        etLastName.setEnabled(false);
+        etEmail.setEnabled(false);
+        etSchoolName.setEnabled(false);
+        btnSave.setVisibility(View.GONE);
     }
 
     /**

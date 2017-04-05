@@ -86,7 +86,7 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
                     builder.setPositiveButton(R.string.view_details, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
-                            intent.putExtra("mode", "view");
+                            intent.putExtra("mode", "View");
                             intent.putExtra("obj", studentInfoList.get(pos));
                             context.startActivity(intent);
                         }
@@ -94,7 +94,7 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
                     builder.setNegativeButton(R.string.edit, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
-                            intent.putExtra("mode", "edit");
+                            intent.putExtra("mode", "Edit");
                             intent.putExtra("obj", studentInfoList.get(pos));
                             Log.d("debug", String.valueOf(pos));
                             intent.putExtra("pos", pos);
