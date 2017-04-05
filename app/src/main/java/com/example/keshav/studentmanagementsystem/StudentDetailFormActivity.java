@@ -78,7 +78,8 @@ public class StudentDetailFormActivity extends AppCompatActivity {
      * Sets values stored student detail to edit
      */
     protected void setEdtitableStudentDetail() {
-        etFirstName.setText(studentData.getmStudentName());
+        etFirstName.setText(studentData.getmFirstName());
+        etLastName.setText(studentData.getmLastName());
         etSchoolName.setText(studentData.getmSchoolName());
         etEmail.setText(studentData.getmEmail());
         tvRollNo.setText(studentData.getmRollNo());
@@ -166,7 +167,7 @@ public class StudentDetailFormActivity extends AppCompatActivity {
             gender = rdbtnOther.getText().toString();
         }
 
-        studentData = new StudentModle(firstName, schoolName, email, gender, rollNo);
+        studentData = new StudentModle(firstName, lastName, schoolName, email, gender, rollNo);
     }
 
 

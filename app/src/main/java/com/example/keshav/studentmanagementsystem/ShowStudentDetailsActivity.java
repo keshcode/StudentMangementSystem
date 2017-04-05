@@ -62,26 +62,26 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("debug", String.valueOf(requestCode));
-        if (requestCode == REQUEST_CODE) {
-            studentInfo = data.getParcelableExtra("savedInfo");
-            Log.d("debug", String.valueOf(resultCode));
-            if (resultCode == 2) {
-                Log.d("debug", "YOU SHALl pass by 2");
-                studentInfoList.add(studentInfo);
-            }
-            if (resultCode == RESULT_CODE_EDITED_STUDENT_FORM) {
-                int pos = data.getIntExtra("pos", 0);
-                Log.d("debug", String.valueOf(pos));
-                studentInfoList.set(pos, studentInfo);
-            }
 
-            Log.d("debug", "YOU pass at all time");
-            RecyclerViewAdaptor recyclerViewAdaptor = new RecyclerViewAdaptor(this, studentInfoList);
-            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
-            recyclerView.setAdapter(recyclerViewAdaptor);
-            setView(recyclerView);
-            recyclerView.setHasFixedSize(true);
+        studentInfo = data.getParcelableExtra("savedInfo");
+        Log.d("debug", String.valueOf(resultCode));
+        if (resultCode == 2) {
+            Log.d("debug", "YOU SHALl pass by 2");
+            studentInfoList.add(studentInfo);
         }
+        if (resultCode == RESULT_CODE_EDITED_STUDENT_FORM) {
+            int pos = data.getIntExtra("pos", 0);
+            Log.d("debug", String.valueOf(pos));
+            studentInfoList.set(pos, studentInfo);
+        }
+
+        Log.d("debug", "YOU pass at all time");
+        RecyclerViewAdaptor recyclerViewAdaptor = new RecyclerViewAdaptor(this, studentInfoList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
+        recyclerView.setAdapter(recyclerViewAdaptor);
+        setView(recyclerView);
+        recyclerView.setHasFixedSize(true);
+
     }
 
     /**

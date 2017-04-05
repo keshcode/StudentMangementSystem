@@ -19,23 +19,27 @@ public class StudentModle implements Parcelable {
             return new StudentModle[size];
         }
     };
-    private String mStudentName, mSchoolName, mEmail, mGender, mRollNo;
+    private String mFirstName, mSchoolName, mEmail, mGender, mRollNo, mLastName;
 
     /**
      * Setting all the values at the time of generating object
      *
-     * @param mStudentName String containing the name of Student
-     * @param mSchoolName  String containing the name of School
-     * @param mEmail       String containing the email address of Student
-     * @param mGender      String containing the Gender of the student
-     * @param mRollNo      String containing the RollNO of the Student
+     * @param mFirstName  String containing the name of Student
+     * @param mLastName   String containing the name of Student
+     * @param mSchoolName String containing the name of School
+     * @param mEmail      String containing the email address of Student
+     * @param mGender     String containing the Gender of the student
+     * @param mRollNo     String containing the RollNO of the Student
      */
-    public StudentModle(final String mStudentName, final String mSchoolName, final String mEmail, final String mGender, final String mRollNo) {
-        this.mStudentName = mStudentName;
+    public StudentModle(final String mFirstName, final String mLastName,
+                        final String mSchoolName, final String mEmail,
+                        final String mGender, final String mRollNo) {
+        this.mFirstName = mFirstName;
         this.mSchoolName = mSchoolName;
         this.mEmail = mEmail;
         this.mGender = mGender;
         this.mRollNo = mRollNo;
+        this.mLastName = mLastName;
     }
 
     /**
@@ -44,28 +48,42 @@ public class StudentModle implements Parcelable {
      * @param in parcel that carry information from another activity
      */
     protected StudentModle(final Parcel in) {
-        mStudentName = in.readString();
+        mFirstName = in.readString();
+        mLastName = in.readString();
         mEmail = in.readString();
         mGender = in.readString();
         mRollNo = in.readString();
         mSchoolName = in.readString();
     }
 
+    /**
+     * @return last Name of Student
+     */
+    public String getmLastName() {
+        return mLastName;
+    }
+
+    /**
+     * @param mLastName String contains the last Name of the student
+     */
+    public void setmLastName(final String mLastName) {
+        this.mLastName = mLastName;
+    }
 
     /**
      * @return name of the student
      */
-    public String getmStudentName() {
-        return mStudentName;
+    public String getmFirstName() {
+        return mFirstName;
     }
 
     /**
      * Sets name of the Student
      *
-     * @param mStudentName String Containing name
+     * @param mFirstNam String Containing name
      */
-    public void setmStudentName(final String mStudentName) {
-        this.mStudentName = mStudentName;
+    public void setmfirstName(final String mFirstNam) {
+        this.mFirstName = mFirstNam;
     }
 
     /**
@@ -139,7 +157,8 @@ public class StudentModle implements Parcelable {
 
     @Override
     public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(mStudentName);
+        dest.writeString(mFirstName);
+        dest.writeString(mLastName);
         dest.writeString(mEmail);
         dest.writeString(mGender);
         dest.writeString(mRollNo);

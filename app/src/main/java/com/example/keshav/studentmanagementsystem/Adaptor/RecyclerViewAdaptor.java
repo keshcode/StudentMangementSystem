@@ -46,9 +46,9 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerViewAdaptor.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         StudentModle studentinfo = studentInfoList.get(position);
-        holder.tvFullName.setText(studentinfo.getmStudentName());
+        holder.tvFullName.setText(studentinfo.getmFirstName() + studentinfo.getmLastName());
         holder.tvRollNo.setText(studentinfo.getmRollNo());
         holder.tvSchoolName.setText(studentinfo.getmSchoolName());
         holder.tvGender.setText(studentinfo.getmGender());
