@@ -138,24 +138,24 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("debug", String.valueOf(requestCode));
+        if (data != null) {
+            studentInfo = data.getParcelableExtra("savedInfo");
+            if (resultCode == 2) {
+                Log.d("debug", "YOU SHALl pass by 2");
+                studentInfoList.add(studentInfo);
+            }
+            if (resultCode == RESULT_CODE_EDITED_STUDENT_FORM) {
+                int pos = data.getIntExtra("pos", 0);
+                Log.d("debug", String.valueOf(pos));
+                studentInfoList.set(pos, studentInfo);
+            }
 
-        studentInfo = data.getParcelableExtra("savedInfo");
-        if (resultCode == 2) {
-            Log.d("debug", "YOU SHALl pass by 2");
-            studentInfoList.add(studentInfo);
+            Log.d("debug", "YOU pass at all time");
+            RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
+            recyclerView.setAdapter(recyclerViewAdaptor);
+            setView(recyclerView);
+            recyclerView.setHasFixedSize(true);
         }
-        if (resultCode == RESULT_CODE_EDITED_STUDENT_FORM) {
-            int pos = data.getIntExtra("pos", 0);
-            Log.d("debug", String.valueOf(pos));
-            studentInfoList.set(pos, studentInfo);
-        }
-
-        Log.d("debug", "YOU pass at all time");
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
-        recyclerView.setAdapter(recyclerViewAdaptor);
-        setView(recyclerView);
-        recyclerView.setHasFixedSize(true);
-
     }
 
     /**
