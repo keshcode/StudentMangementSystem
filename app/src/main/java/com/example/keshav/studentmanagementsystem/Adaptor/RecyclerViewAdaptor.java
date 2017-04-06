@@ -24,7 +24,7 @@ import modle.StudentModle;
  */
 
 public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdaptor.ViewHolder> {
-    private static final int REQUEST_CODE = 1;
+    private static final int REQUEST_CODE = 2;
     private Context context;
     private ArrayList<StudentModle> studentInfoList;
 

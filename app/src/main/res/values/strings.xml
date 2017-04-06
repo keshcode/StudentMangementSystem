@@ -17,6 +17,9 @@
     <string name="view_details">View details</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
-
+    <string-array name="sortby_array">
+        <item>RollNo</item>
+        <item>Name</item>
+    </string-array>
 
 </resources>

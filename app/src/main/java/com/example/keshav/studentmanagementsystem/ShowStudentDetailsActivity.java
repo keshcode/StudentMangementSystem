@@ -8,13 +8,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.keshav.studentmanagementsystem.Adaptor.RecyclerViewAdaptor;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import modle.StudentModle;
 
@@ -31,13 +36,50 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
     private StudentModle studentInfo;
     private Button btnCreateStudent;
     private Switch switchView;
-
+    private Spinner spSortBy;
+    private String name = "Name";
+    private String roll = "RollNo";
+    private RecyclerViewAdaptor recyclerViewAdaptor;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_student_details);
         init();
+        setSpinneroption();
+        spSortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
+                String choose;
+                choose = parent.getItemAtPosition(position).toString();
+                Log.d("debug", choose);
+                if (choose.equals(name)) {
+                    Log.d("debug", "sorting by name");
+                    sortByName();
+                }
+                if (choose.equals(roll)) {
+                    Log.d("debug", "sorting by roll no");
+                    sortByRollNo();
+                }
+                for (StudentModle s : studentInfoList) {
+                    Log.d("ara", s.getmFirstName());
+                    Log.d("ara", s.getmLastName());
+                    Log.d("ara", s.getmRollNo());
+                }
+                //recyclerViewAdaptor.notifyItemMoved(0, studentInfoList.size() - 1);
+                RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
+                recyclerView.setAdapter(recyclerViewAdaptor);
+                setView(recyclerView);
+                recyclerView.setHasFixedSize(true);
+            }
+
+            @Override
+            public void onNothingSelected(final AdapterView<?> parent) {
+
+            }
+
+        });
+        recyclerViewAdaptor = new RecyclerViewAdaptor(this, studentInfoList);
         btnCreateStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -50,12 +92,46 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
     }
 
     /**
+     * sorts arrayList by name of student
+     */
+    protected void sortByName() {
+        Collections.sort(studentInfoList, new Comparator<StudentModle>() {
+            public int compare(final StudentModle one, final StudentModle other) {
+                return (one.getmFirstName() + one.getmLastName()).compareTo(other.getmFirstName() + other.getmLastName());
+            }
+        });
+
+    }
+
+    /**
+     * sorts arrayList BY roll no of Student
+     */
+    protected void sortByRollNo() {
+        Collections.sort(studentInfoList, new Comparator<StudentModle>() {
+            public int compare(final StudentModle one, final StudentModle other) {
+                return (one.getmRollNo()).compareTo(other.getmRollNo());
+            }
+        });
+
+    }
+
+    /**
+     * sets items in spinner
+     */
+    protected void setSpinneroption() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.sortby_array, R.layout.support_simple_spinner_dropdown_item);
+        spSortBy.setAdapter(adapter);
+    }
+
+    /**
      * initialise the variables
      */
     protected void init() {
         btnCreateStudent = (Button) findViewById(R.id.btnCreateStudent);
         studentInfoList = new ArrayList<StudentModle>();
         switchView = (Switch) findViewById(R.id.switchView);
+        spSortBy = (Spinner) findViewById(R.id.spSortBy);
     }
 
     @Override
@@ -64,7 +140,6 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
         Log.d("debug", String.valueOf(requestCode));
 
         studentInfo = data.getParcelableExtra("savedInfo");
-        Log.d("debug", String.valueOf(resultCode));
         if (resultCode == 2) {
             Log.d("debug", "YOU SHALl pass by 2");
             studentInfoList.add(studentInfo);
@@ -76,7 +151,6 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
         }
 
         Log.d("debug", "YOU pass at all time");
-        RecyclerViewAdaptor recyclerViewAdaptor = new RecyclerViewAdaptor(this, studentInfoList);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
         recyclerView.setAdapter(recyclerViewAdaptor);
         setView(recyclerView);
