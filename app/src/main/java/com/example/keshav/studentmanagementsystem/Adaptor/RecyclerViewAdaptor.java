@@ -6,12 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.keshav.studentmanagementsystem.Constants.Constants;
 import com.example.keshav.studentmanagementsystem.R;
 import com.example.keshav.studentmanagementsystem.StudentDetailFormActivity;
 
@@ -23,8 +23,7 @@ import modle.StudentModle;
  * Created by keshav on 4/4/17.
  */
 
-public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdaptor.ViewHolder> {
-    private static final int REQUEST_CODE = 2;
+public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdaptor.ViewHolder> implements Constants {
     private Context context;
     private ArrayList<StudentModle> studentInfoList;
 
@@ -60,6 +59,11 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
         return studentInfoList.size();
     }
 
+    @Override
+    public void checkstyle() {
+
+    }
+
     /**
      * contains the view to be Inflated
      */
@@ -86,19 +90,18 @@ public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdapto
                     builder.setPositiveButton(R.string.view_details, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
-                            intent.putExtra("mode", "View");
-                            intent.putExtra("obj", studentInfoList.get(pos));
+                            intent.putExtra(KEY_MODE, "View");
+                            intent.putExtra(KEY_STUDENT_OBJ, studentInfoList.get(pos));
                             context.startActivity(intent);
                         }
                     });
                     builder.setNegativeButton(R.string.edit, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(final DialogInterface dialog, final int which) {
-                            intent.putExtra("mode", "Edit");
-                            intent.putExtra("obj", studentInfoList.get(pos));
-                            Log.d("debug", String.valueOf(pos));
-                            intent.putExtra("pos", pos);
-                            ((Activity) context).startActivityForResult(intent, REQUEST_CODE);
+                            intent.putExtra(KEY_MODE, "Edit");
+                            intent.putExtra(KEY_STUDENT_OBJ, studentInfoList.get(pos));
+                            intent.putExtra(KEY_POSITION, pos);
+                            ((Activity) context).startActivityForResult(intent, REQUEST_CODE_EDITED_STUDENT_FORM);
                         }
                     });
                     builder.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {

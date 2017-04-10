@@ -17,6 +17,10 @@
     <string name="view_details">View details</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="name">Name</string>;
+    <string name="roll">RollNo</string>;
+
+    
     <string-array name="sortby_array">
         <item>RollNo</item>
         <item>Name</item>

@@ -1,8 +1,8 @@
 package com.example.keshav.studentmanagementsystem;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,14 +11,14 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.keshav.studentmanagementsystem.Constants.Constants;
+
 import modle.StudentModle;
 
 /**
  * This Activity contains Student Detail form and Collect all data and push to ArrayList
  */
-public class StudentDetailFormActivity extends AppCompatActivity {
-    private static final int RESULT_CODE_EDITED_STUDENT_FORM = 21;
-    private static final int RESULT_CODE_STUDENT_FORM = 2;
+public class StudentDetailFormActivity extends AppCompatActivity implements Constants {
     private String view = "View";
     private EditText etFirstName, etLastName, etEmail, etSchoolName;
     private RadioButton rdbtnMale, rdbtnFemale, rdbtnOther;
@@ -37,7 +37,7 @@ public class StudentDetailFormActivity extends AppCompatActivity {
         init();
 
 
-        num = getIntent().getIntExtra("RollNoGenrated", 0);
+        num = getIntent().getIntExtra(KEY_ROLL, 0);
 
         if (num != 0) {
             Integer rollno = new Integer(num);
@@ -45,9 +45,9 @@ public class StudentDetailFormActivity extends AppCompatActivity {
 
         } else {
             paser = getIntent();
-            studentData = paser.getParcelableExtra("obj");
+            studentData = paser.getParcelableExtra(KEY_STUDENT_OBJ);
             setEdtitableStudentDetail();
-            if (paser.getStringExtra("mode").equals(view)) {
+            if (paser.getStringExtra(KEY_MODE).equals(view)) {
                 setViewMode();
             }
 
@@ -87,7 +87,6 @@ public class StudentDetailFormActivity extends AppCompatActivity {
         etSchoolName.setText(studentData.getmSchoolName());
         etEmail.setText(studentData.getmEmail());
         tvRollNo.setText(studentData.getmRollNo());
-        Log.d("debug", studentData.getmGender());
         if (studentData.getmGender().equals(male)) {
             rdbtnMale.setChecked(true);
         } else if (studentData.getmGender().equals(female)) {
@@ -103,14 +102,12 @@ public class StudentDetailFormActivity extends AppCompatActivity {
      */
     protected void save() {
         Intent intent = new Intent();
-        intent.putExtra("savedInfo", studentData);
+        intent.putExtra(KEY_STUDENT_OBJ, studentData);
         if (num != 0) {
-            Log.d("debug", "when num not equal to zero");
-            setResult(RESULT_CODE_STUDENT_FORM, intent);
+            setResult(RESULT_OK, intent);
         } else {
-            Log.d("debug", "when num equals to zero");
             intent.putExtra("pos", paser.getIntExtra("pos", 0));
-            setResult(RESULT_CODE_EDITED_STUDENT_FORM, intent);
+            setResult(RESULT_OK, intent);
         }
         finish();
     }
@@ -158,8 +155,6 @@ public class StudentDetailFormActivity extends AppCompatActivity {
         rdbtnMale = (RadioButton) findViewById(R.id.rdBtnMale);
         rdbtnOther = (RadioButton) findViewById(R.id.rdBtnOther);
         btnSave = (Button) findViewById(R.id.btnSave);
-
-
     }
 
     /**
@@ -183,4 +178,8 @@ public class StudentDetailFormActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void checkstyle() {
+
+    }
 }

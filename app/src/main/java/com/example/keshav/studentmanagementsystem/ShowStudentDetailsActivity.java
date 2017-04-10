@@ -1,8 +1,8 @@
 package com.example.keshav.studentmanagementsystem;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.keshav.studentmanagementsystem.Adaptor.RecyclerViewAdaptor;
+import com.example.keshav.studentmanagementsystem.Constants.Constants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,18 +28,13 @@ import modle.StudentModle;
  * This activity show the student Details contain  and button moves to next activity
  * collecting inputs to show on this activty
  */
-public class ShowStudentDetailsActivity extends AppCompatActivity {
-    private static final int RESULT_CODE_EDITED_STUDENT_FORM = 21;
-    private static final int RESULT_CODE = 2;
-    private static final int REQUEST_CODE = 2;
+public class ShowStudentDetailsActivity extends AppCompatActivity implements Constants {
     private static int rollno = 0;
     private ArrayList<StudentModle> studentInfoList;
     private StudentModle studentInfo;
     private Button btnCreateStudent;
     private Switch switchView;
     private Spinner spSortBy;
-    private String name = "Name";
-    private String roll = "RollNo";
     private RecyclerViewAdaptor recyclerViewAdaptor;
 
     @Override
@@ -52,21 +48,13 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
             public void onItemSelected(final AdapterView<?> parent, final View view, final int position, final long id) {
                 String choose;
                 choose = parent.getItemAtPosition(position).toString();
-                Log.d("debug", choose);
-                if (choose.equals(name)) {
-                    Log.d("debug", "sorting by name");
+                if (choose.equals(R.string.name)) {
                     sortByName();
                 }
-                if (choose.equals(roll)) {
-                    Log.d("debug", "sorting by roll no");
+                if (choose.equals(R.string.roll)) {
                     sortByRollNo();
                 }
-                for (StudentModle s : studentInfoList) {
-                    Log.d("ara", s.getmFirstName());
-                    Log.d("ara", s.getmLastName());
-                    Log.d("ara", s.getmRollNo());
-                }
-                //recyclerViewAdaptor.notifyItemMoved(0, studentInfoList.size() - 1);
+                recyclerViewAdaptor.notifyDataSetChanged();
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
                 recyclerView.setAdapter(recyclerViewAdaptor);
                 setView(recyclerView);
@@ -85,8 +73,8 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
             public void onClick(final View v) {
                 Intent intent = new Intent(ShowStudentDetailsActivity.this, StudentDetailFormActivity.class);
                 rollno++;
-                intent.putExtra("RollNoGenrated", rollno);
-                startActivityForResult(intent, RESULT_CODE);
+                intent.putExtra(KEY_ROLL, rollno);
+                startActivityForResult(intent, REQUEST_CODE_ADD_STUDENT_FORM);
             }
         });
     }
@@ -137,20 +125,15 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("debug", String.valueOf(requestCode));
-        if (data != null) {
-            studentInfo = data.getParcelableExtra("savedInfo");
-            if (resultCode == 2) {
-                Log.d("debug", "YOU SHALl pass by 2");
+        if (resultCode == RESULT_OK) {
+            studentInfo = data.getParcelableExtra(KEY_STUDENT_OBJ);
+            if (requestCode == REQUEST_CODE_ADD_STUDENT_FORM) {
                 studentInfoList.add(studentInfo);
             }
-            if (resultCode == RESULT_CODE_EDITED_STUDENT_FORM) {
-                int pos = data.getIntExtra("pos", 0);
-                Log.d("debug", String.valueOf(pos));
+            if (requestCode == REQUEST_CODE_EDITED_STUDENT_FORM) {
+                int pos = data.getIntExtra(KEY_POSITION, 0);
                 studentInfoList.set(pos, studentInfo);
             }
-
-            Log.d("debug", "YOU pass at all time");
             RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvStudentDetails);
             recyclerView.setAdapter(recyclerViewAdaptor);
             setView(recyclerView);
@@ -176,4 +159,8 @@ public class ShowStudentDetailsActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void checkstyle() {
+
+    }
 }
