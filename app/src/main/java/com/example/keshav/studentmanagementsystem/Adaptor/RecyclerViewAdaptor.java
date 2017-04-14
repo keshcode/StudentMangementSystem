@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import modle.StudentModle;
 
 /**
- * Created by keshav on 4/4/17.
+ * Recycler View Adaptor.
  */
 
 public class RecyclerViewAdaptor extends RecyclerView.Adapter<RecyclerViewAdaptor.ViewHolder> implements Constants {
